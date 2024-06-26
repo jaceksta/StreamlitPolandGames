@@ -45,7 +45,7 @@ with st.expander('Game State xG Data'):
 
     df = sb.events(match_id)
     game_state = get_gamestate(df, home_team, away_team)
-    on = st.toggle("xG per 90", True)
+    on = st.toggle("xG per 90", False)
     fig = plt.figure(figsize=(10, 6))
     plot_game_state(game_state, home_team, away_team, on)
     st.pyplot(fig)
@@ -54,8 +54,8 @@ with st.expander('Game State xG Data'):
 with st.expander('Smallest Header Shot from Set Piece'):
     st.caption("Please note that free version of StatsBomb data does not include player height. The height is generated randomly.")
     temp = merge_shots_heights(df, match_id, home_team, away_team)
-    if temp == 'No set piece shots':
-        st.write(temp)
+    if temp.empty:
+        st.write("No set piece shots in this game")
     else:        
         smallest_player = temp.sort_values(by='player_height', ascending=True).head(1)
         st.write(f"The smallest player to head at goal from set piece was {smallest_player['player_name'].values[0]} at {smallest_player['player_height'].values[0].round(2)} cm")

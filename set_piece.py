@@ -22,7 +22,7 @@ def get_lineups(match_id, home_team, away_team):
 def merge_shots_heights(df, match_id, home_team, away_team):
     shots = get_set_piece_shots(df)
     if shots.empty:
-        return "No set piece shots"
+        return shots
     else:
         lineups = get_lineups(match_id, home_team, away_team)
         return pd.merge(shots, lineups, left_on='player', right_on = 'player_name', how='left')
