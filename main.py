@@ -22,7 +22,7 @@ def get_comp_games():
         
     return matches
 
-def get_team_games(team_name):
+def get_team_games(matches, team_name):
     matches = matches[(matches['home_team'] == team_name) | (matches['away_team'] == team_name)]
 
     matches = matches[['match_id','home_team', 'away_team', 'home_score', 'away_score', 'match_date', 'competition', 'season']]
@@ -33,7 +33,7 @@ games = get_comp_games()
 team_name = st.selectbox('Select a team', games['home_team'].unique())
 
 st.title(f'{team_name} National Team Games')
-team_games = get_team_games(team_name)
+team_games = get_team_games(games, team_name)
 game = st.selectbox('Select a game', team_games['game_name'].unique())
 selected_game = games[games['game_name'] == game]
 
