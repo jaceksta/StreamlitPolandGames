@@ -17,7 +17,7 @@ def get_lineups(match_id, home_team, away_team):
     lineups = pd.concat([sb.lineups(match_id)[home_team], sb.lineups(match_id)[away_team]])
     lineups['player_height'] = generate_player_height(len(lineups))
     lineups['player_id'] = lineups['player_id'].astype('int64')
-    return lineups[[ 'player_id', 'player_name', 'player_height']]
+    return lineups[['player_id', 'player_name', 'player_height']]
 
 def merge_shots_heights(df, match_id, home_team, away_team):
     shots = get_set_piece_shots(df)

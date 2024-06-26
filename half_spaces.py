@@ -11,7 +11,7 @@ def filter_half_space_passes(df, x_range, y_range):
     ]
     
 def filter_half_space_passes_to_penalty(df):
-    passes = df[df['type'] == 'Pass'][['team', 'location', 'pass_end_location', 'pass_outcome', 'pass_typex§']]
+    passes = df[df['type'] == 'Pass'][['team', 'location', 'pass_end_location', 'pass_outcome', 'pass_type']]
     passes['pass_outcome'].fillna('Complete', inplace=True)
 
     passes[['x', 'y']] = passes['location'].apply(extract_coordinates)
