@@ -11,7 +11,7 @@ def filter_half_space_passes(df, x_range, y_range):
         ((df['x'].between(*x_range)) & (df['y'].between(80 - y_range[1], 80 - y_range[0])))
     ]
     
-def filter_half_space_passes_to_penalty(df):
+def filter_half_space_passes_to_penalty(df, set_piece):
     passes = df[df['type'] == 'Pass'][['team', 'location', 'pass_end_location', 'pass_outcome', 'pass_type']]
     passes['pass_outcome'].fillna('Complete', inplace=True)
 
@@ -24,15 +24,15 @@ def filter_half_space_passes_to_penalty(df):
         (half_space_penalty['end_y'].between(18, 62))]
     
     half_space_penalty['pass_type'] = half_space_penalty['pass_type'].fillna('Open Play')
+    if set_piece:
+        return half_space_penalty
+    else:
+        return half_space_penalty[half_space_penalty['pass_type'] == 'Open Play']
 
 def plot_half_space_passes(df, home_team, away_team, set_piece):   
-    half_space_penalty = filter_half_space_passes_to_penalty(df)
-    half_space_penalty['pass_type'] = half_space_penalty['pass_type'].fillna('Open Play')
+    half_space_penalty = filter_half_space_passes_to_penalty(df, set_piece)
 
-    if set_piece:
-        return plot_pitch(df, home_team, away_team)
-    else:
-        return plot_pitch(df[df['pass_type'] == 'Open Play'], home_team, away_team)
+    return plot_pitch(half_space_penalty, home_team, away_team)
 
 def plot_pitch(df, home_team, away_team):
     pitch = Pitch(pitch_type = 'statsbomb', positional=True, shade_middle=True,
