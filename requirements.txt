@@ -2,6 +2,6 @@ streamlit
 pandas
 numpy
 statsbombpy==1.1.1
-matplotlib
+matplotlib==3.8.0
 seaborn
 mplsoccer==1.0.5
