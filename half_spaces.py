@@ -29,7 +29,13 @@ def filter_half_space_passes_to_penalty(df, set_piece = False):
     else:
         return half_space_penalty[half_space_penalty['pass_type'] == 'Open Play']
 
-def plot_half_space_passes(df, home_team, away_team):   
+def plot_half_space_passes(df, home_team, away_team, set_piece):   
+    if set_piece:
+        return plot_pitch(df, home_team, away_team)
+    else:
+        return plot_pitch(df[df['pass_type'] == 'Open Play'], home_team, away_team)
+
+def plot_pitch(df, home_team, away_team):
     pitch = Pitch(pitch_type = 'statsbomb', positional=True, shade_middle=True,
               positional_color='#eadddd', shade_color='#f2f2f2')
 
@@ -47,5 +53,3 @@ def plot_half_space_passes(df, home_team, away_team):
     ax.text(90, 86, away_team, ha='center', fontsize=16, fontfamily='monospace')
     
     return fig
-
-    

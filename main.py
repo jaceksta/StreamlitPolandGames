@@ -65,5 +65,5 @@ with st.expander('Half Space Passes'):
     set_piece = st.toggle("Include Set Piece Passes", True)
     half_space_passes = filter_half_space_passes_to_penalty(df, set_piece)
     st.write(f"There were {len(half_space_passes)} passes from the half space in this game.\n {len(half_space_passes[half_space_passes['team' == home_team]])} from {home_team} and {len(half_space_passes[half_space_passes['team' == away_team]])} from {away_team}")
-    fig2 = plot_half_space_passes(half_space_passes, home_team, away_team)
+    fig2 = plot_half_space_passes(half_space_passes, home_team, away_team, set_piece)
     st.pyplot(fig2)
