@@ -3,5 +3,6 @@ pandas
 numpy
 statsbombpy==1.1.1
 matplotlib==3.8.1
+matplotlib.pyplot
 seaborn
 mplsoccer==1.0.5
