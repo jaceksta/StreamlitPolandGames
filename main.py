@@ -45,6 +45,7 @@ with st.expander('Game State xG Data'):
 
     df = sb.events(match_id)
     game_state = get_gamestate(df, home_team, away_team)
+    st.write(game_state)
     on = st.toggle("xG per 90", False)
     fig = plt.figure(figsize=(10, 6))
     plot_game_state(game_state, home_team, away_team, on)
