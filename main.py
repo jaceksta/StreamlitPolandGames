@@ -30,9 +30,10 @@ games = get_poland_games()
 
 st.title('Poland National Team Games')
 game = st.selectbox('Select a game', games['game_name'].unique())
+selected_game = games[games['game_name'] == game]
 
 with st.expander('Game State xG Data'):
-    selected_game = games[games['game_name'] == game]
+    
     match_id = selected_game['match_id'].values[0]
     home_team = selected_game['home_team'].values[0]
     away_team = selected_game['away_team'].values[0]
@@ -46,7 +47,10 @@ with st.expander('Game State xG Data'):
 
 
 with st.expander('Smallest Header Shot from Set Piece'):
-    st.write(df['player_id'].unique())
+    st.caption("Please note that free version of StatsBomb data does not include player height. The height are generated randomly.")
+    temp = merge_shots_heights(df, match_id, home_team, away_team)
+    smallest_player = temp.sort_values(by='player_height', ascending=True).head(1)
+    st.write(f"The smallest player to head at goal from set piece was {smallest_player['player_name'].values[0]} at {smallest_player['player_height'].values[0].round(2)} cm")
     
 with st.expander('Half Space Passes'):
     set_piece = st.toggle("Include Set Piece Passes", True)
