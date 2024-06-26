@@ -30,7 +30,7 @@ def get_team_games(matches, team_name):
     return matches
     
 games = get_comp_games()
-team_name = st.selectbox('Select a team', games['home_team'].unique())
+team_name = st.selectbox('Select a team', sorted(games['home_team'].unique()))
 
 st.title(f'{team_name} National Team Games')
 team_games = get_team_games(games, team_name)
