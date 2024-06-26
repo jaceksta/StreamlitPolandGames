@@ -8,6 +8,7 @@ def add_missing_game_states(merged_df, home_team, away_team):
         if not merged_df['game_state'].str.contains(team).any():
             new_rows = [{'team': t, 'game_state': f"{team} Lead", 'shot_statsbomb_xg': np.nan, 'duration': 0} for t in [away_team, home_team]]
             merged_df = pd.concat([merged_df, pd.DataFrame(new_rows)])
+    merged_df['xg_per_90']= merged_df['shot_statsbomb_xg'] / (merged_df['duration'] / 5400)
     return merged_df
 
 def get_gamestate(df, home_team, away_team):
@@ -62,7 +63,7 @@ def process_shots(shots, home_team, away_team):
     return pd.concat([shooting, defending]).groupby(['team', 'game_state'])['shot_statsbomb_xg'].sum().reset_index()
 
 def plot_game_state(data, home_team, away_team, per_90=True):
-    data['xg_per_90'] = data['shot_statsbomb_xg'] / (data['duration'] / 5400)
+    
 
 
     order = [f"{home_team} Lead", 'Draw', f"{away_team} Lead"]
