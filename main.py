@@ -6,6 +6,7 @@ from game_state import plot_game_state
 import matplotlib.pyplot as plt
 from set_piece import merge_shots_heights
 from half_spaces import plot_half_space_passes
+from mplsoccer import Pitch
 
 def get_poland_games():
     comps = sb.competitions()
