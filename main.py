@@ -5,8 +5,7 @@ from game_state import get_gamestate
 from game_state import plot_game_state
 import matplotlib.pyplot as plt
 from set_piece import merge_shots_heights
-from half_spaces import plot_half_space_passes
-from half_spaces import filter_half_space_passes_to_penalty
+from half_spaces import plot_half_space_passes, filter_half_space_passes_to_penalty
 
 
 def get_comp_games():
