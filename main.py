@@ -48,9 +48,7 @@ with st.expander('Game State xG Data'):
 
 with st.expander('Smallest Header Shot from Set Piece'):
     st.caption("Please note that free version of StatsBomb data does not include player height. The height are generated randomly.")
-    temp = merge_shots_heights(df, match_id, home_team, away_team)
-    smallest_player = temp.sort_values(by='player_height', ascending=True).head(1)
-    st.write(f"The smallest player to head at goal from set piece was {smallest_player['player_name'].values[0]} at {smallest_player['player_height'].values[0].round(2)} cm")
+    st.write(df.head(5))
     
 with st.expander('Half Space Passes'):
     set_piece = st.toggle("Include Set Piece Passes", True)
