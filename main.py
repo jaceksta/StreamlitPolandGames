@@ -8,7 +8,7 @@ from set_piece import merge_shots_heights
 from half_spaces import plot_half_space_passes
 from mplsoccer import Pitch
 
-def get_poland_games():
+def get_comp_games():
     comps = sb.competitions()
 
     comps = comps[(comps['competition_gender'] == 'male') & (comps['competition_international'] == True)
@@ -20,16 +20,21 @@ def get_poland_games():
         temp = sb.matches(row['competition_id'], row['season_id'])
         matches = pd.concat([matches, temp])
         
-    matches = matches[(matches['home_team'] == 'Poland') | (matches['away_team'] == 'Poland')]
+    return matches
+
+def get_team_games(team_name):
+    matches = matches[(matches['home_team'] == team_name) | (matches['away_team'] == team_name)]
 
     matches = matches[['match_id','home_team', 'away_team', 'home_score', 'away_score', 'match_date', 'competition', 'season']]
     matches['game_name'] = matches['home_team'] + ' vs ' + matches['away_team'] + ' ('+ matches['season'] + ')'
     return matches
     
-games = get_poland_games()
+games = get_comp_games()
+team_name = st.selectbox('Select a team', games['home_team'].unique())
 
-st.title('Poland National Team Games')
-game = st.selectbox('Select a game', games['game_name'].unique())
+st.title(f'{team_name} National Team Games')
+team_games = get_team_games(team_name)
+game = st.selectbox('Select a game', team_games['game_name'].unique())
 selected_game = games[games['game_name'] == game]
 
 with st.expander('Game State xG Data'):
