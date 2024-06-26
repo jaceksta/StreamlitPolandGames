@@ -6,6 +6,7 @@ from game_state import plot_game_state
 import matplotlib.pyplot as plt
 from set_piece import merge_shots_heights
 from half_spaces import plot_half_space_passes
+from half_spaces import filter_half_space_passes_to_penalty
 from mplsoccer import Pitch
 
 def get_comp_games():
@@ -64,5 +65,7 @@ with st.expander('Smallest Header Shot from Set Piece'):
     
 with st.expander('Half Space Passes'):
     set_piece = st.toggle("Include Set Piece Passes", True)
-    fig2 = plot_half_space_passes(df, home_team, away_team, set_piece)
+    df = filter_half_space_passes_to_penalty(df, set_piece)
+    st.write(f"There were {len(df)} passes from the half space in this game.\n {len(df[df['team' == home_team]])} from {home_team} and {len(df[df['team' == away_team]])} from {away_team}")
+    fig2 = plot_half_space_passes(df, home_team, away_team)
     st.pyplot(fig2)
