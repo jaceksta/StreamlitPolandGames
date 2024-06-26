@@ -63,9 +63,6 @@ def process_shots(shots, home_team, away_team):
     return pd.concat([shooting, defending]).groupby(['team', 'game_state'])['shot_statsbomb_xg'].sum().reset_index()
 
 def plot_game_state(data, home_team, away_team, per_90=True):
-    
-
-
     order = [f"{home_team} Lead", 'Draw', f"{away_team} Lead"]
     if per_90:
         heatmap_data = data.set_index(['team', 'game_state'])['xg_per_90'].unstack()[order]
