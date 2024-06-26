@@ -3,7 +3,7 @@ import numpy as np
 from statsbombpy import sb
 
 def get_set_piece_shots(df):
-    shots_for_set_piece = df[(df['type'] == 'Shot') & (df['play_pattern'].str.contains('From')) & (df['shot_body_part'] == 'Head')][['type', 'team', 'player_id','player', 'play_pattern', 'shot_statsbomb_xg', 'shot_body_part']]
+    shots_for_set_piece = df[(df['type'] == 'Shot') & (df['play_pattern'].str.contains('From')) & (df['shot_body_part'] == 'Head')]
 
     shots_for_set_piece['player_id'] = shots_for_set_piece['player_id'].astype('int64')
 
