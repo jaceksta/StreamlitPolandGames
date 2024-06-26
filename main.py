@@ -35,7 +35,7 @@ team_name = st.selectbox('Select a team', games['home_team'].unique())
 st.title(f'{team_name} National Team Games')
 team_games = get_team_games(games, team_name)
 game = st.selectbox('Select a game', team_games['game_name'].unique())
-selected_game = games[games['game_name'] == game]
+selected_game = team_games[team_games['game_name'] == game]
 
 with st.expander('Game State xG Data'):
     
