@@ -54,7 +54,7 @@ with st.expander('Game State xG Data'):
 with st.expander('Smallest Header Shot from Set Piece'):
     st.caption("Please note that free version of StatsBomb data does not include player height. The height is generated randomly.")
     temp = merge_shots_heights(df, match_id, home_team, away_team)
-    if temp == 'No set piece shots'
+    if temp == 'No set piece shots':
         st.write(temp)
     else:        
         smallest_player = temp.sort_values(by='player_height', ascending=True).head(1)
