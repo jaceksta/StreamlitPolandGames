@@ -30,9 +30,10 @@ def get_team_games(matches, team_name):
     return matches
     
 games = get_comp_games()
+st.caption("Author: Jacek Staszak | Data: Statsbomb")
 team_name = st.selectbox('Select a team', sorted(games['home_team'].unique()))
 
-st.title(f'{team_name} National Team Games')
+st.title(f'{team_name} National Team Games: Euros and World Cup')
 team_games = get_team_games(games, team_name)
 game = st.selectbox('Select a game', team_games['game_name'].unique())
 selected_game = team_games[team_games['game_name'] == game]
@@ -41,8 +42,10 @@ home_team = selected_game['home_team'].values[0]
 away_team = selected_game['away_team'].values[0]
 df = sb.events(match_id)
 
-with st.expander('Game State xG Data'):      
+with st.expander('Game State xG Data'):  
+    st.caption("Table shows xG difference and xG scored per each game state. Plotted xG scored.")    
     game_state = get_gamestate(df, home_team, away_team)
+    game_state.rename(columns={'duration': 'duration (s)'}, inplace=True)
     st.write(game_state)
     on = st.toggle("xG per 90", False)
     fig = plt.figure(figsize=(10, 6))

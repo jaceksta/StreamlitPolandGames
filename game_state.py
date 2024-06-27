@@ -6,10 +6,11 @@ import numpy as np
 def add_missing_game_states(merged_df, home_team, away_team):
     for team in [away_team, home_team]:
         if not merged_df['game_state'].str.contains(team).any():
-            new_rows = [{'team': t, 'game_state': f"{team} Lead", 'shot_statsbomb_xg': np.nan, 'duration': 0} for t in [away_team, home_team]]
+            new_rows = [{'team': t, 'game_state': f"{team} Lead", 'shot_statsbomb_xg': np.nan, 'duration': 0, 'xg_diff': np.nan} for t in [away_team, home_team]]
             merged_df = pd.concat([merged_df, pd.DataFrame(new_rows)])
     merged_df['xg_per_90']= merged_df['shot_statsbomb_xg'] / (merged_df['duration'] / 5400)
     return merged_df
+
 
 def get_gamestate(df, home_team, away_team):
     df['newsecond'] = df['minute'] * 60 + df['second']
@@ -59,8 +60,9 @@ def process_shots(shots, home_team, away_team):
     defending = shots.groupby(['team_defending', 'game_state'])['shot_statsbomb_xg'].sum().reset_index()
     defending = defending.rename(columns={'team_defending': 'team'})
     defending['shot_statsbomb_xg'] *= -1
-    
-    return pd.concat([shooting, defending]).groupby(['team', 'game_state'])['shot_statsbomb_xg'].sum().reset_index()
+    diff = pd.concat([shooting, defending]).groupby(['team', 'game_state'])['shot_statsbomb_xg'].sum().reset_index()
+    diff = diff.rename(columns={'shot_statsbomb_xg': 'xg_diff'})
+    return pd.merge(shooting, diff, on=['team', 'game_state'], how='outer')  
 
 def plot_game_state(data, home_team, away_team, per_90=True):
     order = [f"{home_team} Lead", 'Draw', f"{away_team} Lead"]
